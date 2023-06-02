@@ -5,49 +5,96 @@ let array1 = [];
 function add() {
   let value = document.getElementById("input").value;
   array1.push(value);
-  console.log(value);
-  console.log(array1);
+  document.getElementById("output").innerHTML = array1;
 }
+// let people = [];
+// function addInfo() {
+//   let firstName = document.getElementById("firstName").value;
+//   let lastName = document.getElementById("lastName").value;
+//   let age = document.getElementById("age").value;
 
-function addPerson() {}
-let person = [
-//   { id: 1, firsName: "Asiphe", lastName: "Ndimlana", age: 13 },
-//   { id: 2, firsName: "Samkelo", lastName: "Mpokela", age: 21 },
-//   { id: 3, firsName: "Zubair", lastName: "Matthee", age: 24 },
-//   { id: 4, firsName: "Lisa", lastName: "Mbuwa", age: 20 },
-//   { id: 5, firsName: "Ethan", lastName: "Oliver", age: 19 },
-//   { id: 6, firsName: "Mufuniwa", lastName: "Mbedzi", age: 20 },
-//   { id: 7, firsName: "Laeeq", lastName: "Majal", age: 18 },
-//   { id: 8, firsName: "Liyabona", lastName: "Mxhalise", age: 12 },
-//   { id: 9, firsName: "Inam", lastName: "Nkabi", age: 67 },
-];
-let dispperson = document.querySelector("table");
-person.forEach((data) => {
-  dispperson.innerHTML += `<table border="1" id="table">
-    <tr id= "tbody">
-    <td id="value">${data.firsName}</td>
-    <td id="value">${data.lastName}</td>
-    <td id="value">${data.age}</td>
-</tr>
-</table>
-  `;
-});
+//   let newRow = document.createElement("tr");
+//   let firstNameCell = document.createElement("td");
+//   firstNameCell.textContent = firstName;
+//   let lastNameCell = document.createElement("td");
+//   lastNameCell.textContent = lastName;
+//   let ageCell = document.createElement("td");
+
+//   ageCell.textContent = age;
+//   newRow.appendChild(firstNameCell);
+//   newRow.appendChild(lastNameCell);
+//   newRow.appendChild(ageCell);
+//   document
+//     .getElementById("table")
+//     .getElementsByTagName("tbody")[0]
+//     .appendChild(newRow);
+
+// }
+let people = [];
+
 function addInfo() {
   let firstName = document.getElementById("firstName").value;
   let lastName = document.getElementById("lastName").value;
   let age = document.getElementById("age").value;
-  let newRow = document.createElement("tr");
- let firstNameCell = document.createElement("td");
-  firstNameCell.textContent = firstName;
-  let lastNameCell = document.createElement("td");
-  lastNameCell.textContent = lastName;
-  let ageCell = document.createElement("td");
-  ageCell.textContent = age;
-  newRow.appendChild(firstNameCell);
-  newRow.appendChild(lastNameCell);
-  newRow.appendChild(ageCell);
-  document
+
+  let person = {
+    firstName: firstName,
+    lastName: lastName,
+    age: age,
+  };
+
+  people.push(person);
+  saveToLocalStorage();
+  updateTable();
+
+  // Clear input fields
+  document.getElementById("firstName").value = "";
+  document.getElementById("lastName").value = "";
+  document.getElementById("age").value = "";
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem("people", JSON.stringify(people));
+}
+
+function loadFromLocalStorage() {
+  let storedPeople = localStorage.getItem("people");
+  if (storedPeople) {
+    people = JSON.parse(storedPeople);
+    updateTable();
+  }
+}
+
+function updateTable() {
+  let tableBody = document
     .getElementById("table")
-    .getElementsByTagName("tbody")[0]
-    .appendChild(newRow);
+    .getElementsByTagName("tbody")[0];
+  tableBody.innerHTML = "";
+
+  for (let i = 0; i < people.length; i++) {
+    let person = people[i];
+
+    let newRow = document.createElement("tr");
+    let firstNameCell = document.createElement("td");
+    firstNameCell.textContent = person.firstName;
+    let lastNameCell = document.createElement("td");
+    lastNameCell.textContent = person.lastName;
+    let ageCell = document.createElement("td");
+    ageCell.textContent = person.age;
+
+    newRow.appendChild(firstNameCell);
+    newRow.appendChild(lastNameCell);
+    newRow.appendChild(ageCell);
+
+    tableBody.appendChild(newRow);
+  }
+}
+
+// Load data from local storage when the page is loaded
+loadFromLocalStorage();
+
+function clearLocalStorage() {
+  localStorage.removeItem("people");
+  people = [];
+  updateTable();
 }

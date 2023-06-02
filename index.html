@@ -10,25 +10,39 @@
   <body>
     <div class="container">
       <h1>Array Exercise</h1>
-      <label for="inputBox">Enter Value:</label>
-      <input type="number" name="inputBox" id="input" />
-      <button onclick="add()">Add</button>
+      <div class="firstArray">
+        <label for="inputBox">Enter Value:</label>
+        <input type="number" name="inputBox" id="input" />
+        <button onclick="add()">Add</button>
+        <div class="output" id="output"></div>
+      </div>
       <div class="table" id="table">
-        <table border="">
-          <th>Name</th>
-          <th>Surname</th>
-          <th>Age</th>
-        </table>
         Add FirstName:
+        <br />
         <input type="text" id="firstName" />
         <br />
         Add lastName:
+        <br />
         <input type="text" id="lastName" />
         <br />
         Add age:
+        <br />
         <input type="text" id="age" />
         <br />
+        <br />
         <button onclick="addInfo()">Add</button>
+        <button onclick="clearLocalStorage()">Clear</button>
+
+        <br />
+        <br />
+        <table border="">
+          <thead>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
     <script src="/code.js"></script>
